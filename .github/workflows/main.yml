@@ -1,0 +1,30 @@
+name: Deploy Medusa
+
+on:
+  push:
+    branches:
+      - main  # Adjust this if you want to deploy from a different branch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest  # Use Ubuntu for the build environment
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'  # Specify the required Python version
+
+      - name: Install dependencies
+        run: |
+          python -m venv venv
+          source venv/bin/activate
+          pip install -r requirements.txt
+
+      - name: Run application
+        run: |
+          source venv/bin/activate
+          python medusa.py
